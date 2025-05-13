@@ -1,0 +1,16 @@
+
+{
+  "name": "medical-appointment-scheduler",
+  "version": "1.0.0",
+  "description": "A medical appointment scheduling app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.7.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0"
+  }
+}

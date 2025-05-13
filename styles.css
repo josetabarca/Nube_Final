@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #a3d0f8;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+#calendar-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#appointment-form {
+    display: none;
+}
+
+h1 {
+    color: #007bff; 
+}
+
+.form-group label {
+    color: #333; 
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
