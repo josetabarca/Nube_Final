@@ -1,21 +1,22 @@
 
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
-const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 
+// Load environment variables from .env file
 dotenv.config();
 
-const path = require('path');
-app.get('/', (req, res) => {
-  res.sendfile(path.join(__dirname, 'index.html'));
-});
-
 const app = express();
-app.use(bodyParser.json());
-app.use(cors());
+const port = process.env.PORT || 3000;
 
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+
+// PostgreSQL connection pool
 const pool = new Pool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -24,19 +25,26 @@ const pool = new Pool({
   port: process.env.DB_PORT
 });
 
-app.post('/agenda', async (req, res) => {
-  const { name, date } = req.body;
-  console.log('Datos recibidos:', req.body);
-  try {
-    const query = 'INSERT INTO agenda (name, date) VALUES ($1, $2)';
-    await pool.query(query, [name, date]);
-    res.status(200).send('Cita programada exitosamente');
-  } catch (err) {
-    console.error('Error al programar la cita', err);
-    res.status(500).send('Error al programar la cita');
-  }
+// Serve index.html from the root directory
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(3000, () => {
-  console.log('Servidor escuchando en el puerto 3000');
+// Endpoint to handle appointment scheduling
+app.post('/agenda', (req, res) => {
+  const { name, date } = req.body;
+  const query = 'INSERT INTO agenda (name, date) VALUES ($1, $2)';
+  pool.query(query, [name, date])
+    .then(() => {
+      res.status(200).send('Cita programada exitosamente');
+    })
+    .catch((err) => {
+      console.error('Error al programar la cita', err);
+      res.status(500).send('Error al programar la cita');
+    });
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
