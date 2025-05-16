@@ -7,6 +7,11 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+const path = require('path');
+app.get('/', (req, res) => {
+  res.sendfile(path.join(__dirname, 'index.html'));
+});
+
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
