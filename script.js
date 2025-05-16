@@ -33,7 +33,7 @@ $(document).ready(function() {
                 if (patientName && formattedDate) {
                     console.log('Datos enviados:', { name: patientName, date: formattedDate }); 
                     $.ajax({
-                        url: "BACKEND_URL/agenda", // Cambiar!!
+                        url: "https://nube-final.onrender.com//agenda", // Cambiar!!
                         method: "POST",
                         data: JSON.stringify({ name: patientName, date: formattedDate }),
                         contentType: "application/json",
